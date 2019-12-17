@@ -1,5 +1,5 @@
 import java.util.*;
-//test comment
+//test comment, will be deleted.on github
 class ArrayTest{
   public static void main(String args[]){
     int[] ar = new int[2];
