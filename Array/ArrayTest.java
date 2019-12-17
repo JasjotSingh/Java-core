@@ -1,9 +1,5 @@
 import java.util.*;
-<<<<<<< HEAD
-//test comment//added on atom
-=======
 //test comment, will be deleted.on github
->>>>>>> fa9a6284065de1906b617cbcf37e151ab6c96c43
 class ArrayTest{
   public static void main(String args[]){
     int[] ar = new int[2];
