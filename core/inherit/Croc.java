@@ -9,8 +9,8 @@ class Croc extends Reptile{
     this.count = 0;
   }
 
-  Croc(int height, double weight, String animalType, String skinType, boolean backBone, int count){
-    super(height, weight,animalType,skinType,backBone,"Hard Shell");
+  Croc(int height, double weight, int count){
+    super(height, weight,"reptile","hard scales",true,"Hard Shell");
     this.count = count;
   }
 
