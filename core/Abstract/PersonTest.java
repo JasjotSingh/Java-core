@@ -1,6 +1,7 @@
 
 class PersonTest{
   public static void main(String args[]){
+    System.out.println(args[0]+" ----- "+args[1]);
     Person jas = new Indian("jas");
     System.out.println(jas.walk());
     System.out.println(jas.eats());

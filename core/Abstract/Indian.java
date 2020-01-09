@@ -1,5 +1,5 @@
 
-class Indian extends Asian implements Action{
+class Indian extends Asian{
   public Indian(){
     super();
   }
