@@ -58,7 +58,7 @@ class AniShel{
   void getAny(){
     if(dlist.size() == 0){
       Cat ct = clist.getFirst();
-      dlist.remove(ct);
+      clist.remove(ct);
       System.out.println("get1 "+ct.getName());
       return;
     }
