@@ -1,35 +1,37 @@
-
-import java.util.*;
-
 //is acyclic then mother node will be the one that is not present in any of the child lists.
 //in cyclic grph , above is not always true;
 
-class Solution extends Graph{
+import java.util.*;
 
-  void dfs(int node){
-     cySeen.put(node, 2);
-     List<Integer> clist = graph.getOrDefault(node, null);
-     if(clist != null){
-       for(int child: clist){
-         if(cySeen.get(child) == 0){
-           dfs(child);
-         }
-       }
-     }
+class Solution extends Graph{
+  void bfs(int node){
+      Queue<Integer> qu = new LinkedList<>();
+      qu.add(node);
+      cySeen.put(node, 2);
+      while(!qu.isEmpty()){
+        int pnode = qu.poll();
+        List<Integer> clist = graph.getOrDefault(pnode, null);
+        if(clist != null){
+          for(int child: clist){
+            if(cySeen.get(child) == 0){
+              cySeen.put(child,2);
+              qu.add(child);
+            }
+          }
+        }
+      }
   }
 
-  public void motherNodeDFS(){
+  void motherNodeBFS(){
     int motherNode = 0;
-    for(int pnode : graph.keySet()){
+    for(int pnode: graph.keySet()){
       if(cySeen.get(pnode) == 0){
-        dfs(pnode);
+        bfs(pnode);
         motherNode = pnode;
       }
     }
-
     clearSeen();
-
-    dfs(motherNode);
+    bfs(motherNode);
     for(int seenValue: cySeen.values()){
       if(seenValue != 2){
         System.out.println("no Mother node exists.");
@@ -41,7 +43,7 @@ class Solution extends Graph{
   }
 }
 
-class MotherNodeDFS{
+class MotherNodeBFS{
   //is acyclic then mother node will be the one that is not present in any of the child lists.
   //in cyclic grph , above is not always true;
   public static void main(String[] args) {
@@ -64,7 +66,7 @@ class MotherNodeDFS{
     sol.displaySeen();
 
     int strt = (int)System.nanoTime();
-    sol.motherNodeDFS();
+    sol.motherNodeBFS();
     int end = (int)System.nanoTime();
     System.out.println("tiem taken: "+(end-strt));
   }
