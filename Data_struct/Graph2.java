@@ -131,6 +131,10 @@ class Dijk{
   }
 
   void dijkstra(int strtval){
+    //look at NEW NOTE below.
+    //NEW NOTE look for new implementation in Java/crack/GraphPract1.
+    //simillar as below implitaation, but adds three states in seen,
+    //to make it more like actual dijkstra.
     PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>(){
       @Override
       public int compare(Integer i1, Integer i2){

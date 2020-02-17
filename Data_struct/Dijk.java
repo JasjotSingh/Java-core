@@ -56,12 +56,16 @@ class graph{
           ne.setWeight(dlist.get(node).getWeight() + n.getWeight());
           ne.setNode(node);
         }
+        //look at NEW NOTE below.
         //doing this check here is wrong (but gives right answers), since we are
         //updating the distance above then deciding not to
         //add the new distance to pq, since it was already seen.
         //as per dijk algo, check to see if seen should be made before weight update above.
         //OR
         //look at dijk1.java comment in dijk algo.
+
+        //NEW NOTE look for new implementation in Java/crack/GraphPract1.
+        //resolves the above issues.
         if(!seen.contains(n.getNode())){
           seen.add(n.getNode());
           pq.add(n.getNode());

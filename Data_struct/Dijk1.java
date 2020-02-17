@@ -92,6 +92,11 @@ class Dijk{
       // if(seen.contains(sv))
       //   continue;
       // seen.add(sv);
+
+      //look at NEW NOTE below.
+      //NEW NOTE look for new implementation in Java/crack/GraphPract1.
+      //resolves the above issues.
+
       LinkedList<Node> alist = grph.getOrDefault(sv, null);
       if(alist != null){
         for(Node node : alist){
