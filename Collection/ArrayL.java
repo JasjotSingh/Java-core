@@ -67,6 +67,7 @@ class ArrayL{
     }
 
     //comparable --
+    //look at https://www.concretepage.com/java/example-collections-reverseorder-java. good resource.
     System.out.println("\ncomparable sorted empclass list: ");
     Collections.sort(ar1,Collections.reverseOrder());
     for(Emp e: ar1){
