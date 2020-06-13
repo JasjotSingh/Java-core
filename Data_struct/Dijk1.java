@@ -121,6 +121,7 @@ class Dijk{
     }
   }
 
+  //look at implemntation in data_struct1/graph.  this has some issues.
   void bellford(ArrayList<Integer> nlist){
     seen.clear();
     for(int k : nlist){
@@ -151,6 +152,7 @@ class Dijk{
     System.out.println("negative cycle at: ");
     //to get negative cycle do one more iteration, iin case,
     // any score improves, that means we have a negative cycle.
+    //IMp============ idealy this needs to run nlist.size()-1 times , same as above loop. not just once.
     for(int key : nlist){
       LinkedList<Node> alist = grph.get(key);
       if(alist != null){

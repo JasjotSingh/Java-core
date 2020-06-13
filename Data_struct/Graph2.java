@@ -177,6 +177,7 @@ class Dijk{
     }
   }
 
+  //issues in bell, check data_struct1 for correct.
   void bellford(ArrayList<Integer> nlist){
 
     int stval = nlist.get(0);
@@ -204,6 +205,7 @@ class Dijk{
       System.out.println(key+" dist:"+dlist.get(key).getDist()+" prev:"+dlist.get(key).getval());
     }
     System.out.println("Negative cycles at:");
+    //iisue should run n-1 times:
     for(int key: nlist){
       LinkedList<Node> alist = grp.getOrDefault(key, null);
       if(alist != null){

@@ -16,13 +16,15 @@ class Node{
 
 class GraphUtil{
   HashMap<String, List<Node>> graph;
-  HashMap<String, Integer> dist;
+  HashMap<String, Integer> dist; //instead of integer we can also have node to track path and disatance.
   HashSet<String> seen;
+  HashMap<String, String> path;  //optinal to get the shortest path. update at line 98.
 
   GraphUtil(){
     graph = new HashMap<>();
     dist = new HashMap<>();
     seen = new HashSet<>();
+    path = new HashMap<>();
   }
 
   public void display(){
@@ -91,13 +93,16 @@ class GraphUtil{
         if(alist != null){
           for(Node node: alist){
             int newdist = dist.get(key) + node.weight;
-            if(newdist < dist.get(node.node))
+            if(newdist < dist.get(node.node)){
               dist.put(node.node, newdist);
+              path.put(node.node, key);
+            }
           }
         }
       }
     }
 
+    System.out.println("Path :"+path);
     for(String nodeVal : dist.keySet()){
       System.out.println(nodeVal + " "+dist.get(nodeVal));
     }
@@ -124,6 +129,6 @@ class GraphSSSP{
 
     gra.display();
 
-    gra.SSSPAlgo("d");
+    gra.SSSPAlgo("a");
   }
 }
