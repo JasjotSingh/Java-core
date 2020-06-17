@@ -1,95 +1,132 @@
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 
-// class Foo{
-//
-//   Lock lock = new ReentrantLock();
-//
-//   Condition first = lock.newCondition();
-//   Condition second = lock.newCondition();
-//   Boolean firstLock;
-//   Boolean secondLock;
-//
-//   public Foo(){
-// firstLock = false;
-// secondLock  =false;
-//   }
-//   public void first(){
-//     lock.lock();
-//       System.out.println("first");
-//       firstLock = true;
-//       first.signal();
-//     lock.unlock();
-//   }
-//   public void second(){
-//     lock.lock();
-//     while(!firstLock){
-//       try {
-//         first.await();
-//       } catch(Exception e) {
-//         e.printStackTrace();
-//       }
-//     }
-//
-//       System.out.println("second");
-//       secondLock = true;
-//       second.signal();
-//     lock.unlock();
-//   }
-//   public void third(){
-//     lock.lock();
-//     while(!secondLock){
-//       try {
-//         second.await();
-//       } catch(Exception e) {
-//         e.printStackTrace();
-//       }
-//     }
-//       System.out.println("third");
-//     lock.unlock();
-//   }
-// }
+//===========USING LOCKS=============//
 
 class Foo{
 
-  Semaphore sem;
+  Lock lock = new ReentrantLock();
+  Condition first = lock.newCondition();
+  Condition second = lock.newCondition();
+  Boolean firstLock;
+  Boolean secondLock;
 
   public Foo(){
-    sem  = new Semaphore(2);
-
-    try {
-      sem.acquire(2);
-    } catch(Exception e) {
-      e.printStackTrace();
-    }
+    firstLock = true;
+    secondLock = true;
   }
   public void first(){
-    System.out.println("first: "+sem.availablePermits());
-    System.out.println("first");
-    sem.release(1);
+    lock.lock();
+
+    try{
+      System.out.println("first");
+
+      firstLock = false;
+      first.signal();
+    }
+    finally{
+      //should always be called from a finally block,
+      //in case try block throws exception, we will always release lock.
+      //otherwise we ll return without releasing lock.
+      lock.unlock();
+    }
   }
   public void second(){
+    lock.lock();
     try {
-      System.out.println("second: "+sem.availablePermits());
-      sem.acquire(1);
-    } catch(Exception e) {
+
+      while(firstLock){
+        first.await();
+      }
+
+      System.out.println("second");
+
+      secondLock = false;
+      second.signal();
+    }
+    catch(Exception e) {
       e.printStackTrace();
     }
-    System.out.println("second");
-    sem.release(2);
+    finally{
+      //should always be called from a finally block,
+      //in case try block throws exception, we will always release lock.
+      //otherwise we ll return without releasing lock.
+      lock.unlock();
+    }
 
   }
   public void third(){
-    try {
-      System.out.println("three: "+sem.availablePermits());
-      sem.acquire(2);
-    } catch(Exception e) {
+    lock.lock();
+    try{
+
+      while(secondLock){
+        second.await();
+      }
+
+      System.out.println("third");
+    }
+    catch(Exception e) {
       e.printStackTrace();
     }
-    System.out.println("third");
-    sem.release(2);
+    finally{
+      //should always be called from a finally block,
+      //in case try block throws exception, we will always release lock.
+      //otherwise we ll return without releasing lock.
+      lock.unlock();
+    }
   }
 }
+
+
+//===========USING SEMAPHORES ============//
+// class Foo{
+//
+//   Semaphore sem1;
+//   Semaphore sem2;
+//
+//   public Foo(){
+//     sem1  = new Semaphore(1);
+//     sem2  = new Semaphore(1);
+//
+//     try {
+//       //lock both sempahores.
+//       sem1.acquire();
+//       sem2.acquire(1);
+//     } catch(Exception e) {
+//       e.printStackTrace();
+//     }
+//   }
+//   public void first(){
+//
+//     System.out.println("first");
+//     //release sem1
+//     sem1.release();
+//   }
+//   public void second(){
+//     try {
+//       //acquire sem1
+//       sem1.acquire();
+//     } catch(Exception e) {
+//       e.printStackTrace();
+//     }
+//     System.out.println("second");
+//     //release sem1 and sem2.
+//     sem1.release();
+//     sem2.release(1);
+//
+//   }
+//   public void third(){
+//     try {
+//       //acquire sem2
+//       sem2.acquire(1);
+//     } catch(Exception e) {
+//       e.printStackTrace();
+//     }
+//     System.out.println("third");
+//     // release sem2
+//     sem2.release(1);
+//   }
+// }
 
 class CallinOrder{
   public static void main(String[] args) {
